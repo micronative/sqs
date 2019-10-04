@@ -58,7 +58,14 @@ class SqsMessage implements Message
      */
     private $requeueVisibilityTimeout;
 
-    public function __construct(string $body = null, array $properties = [], array $headers = [])
+    /**
+     * SqsMessage constructor.
+     *
+     * @param string|null $body
+     * @param array $properties
+     * @param array $headers
+     */
+    public function __construct(string $body = '', array $properties = [], array $headers = [])
     {
         $this->body = $body;
         $this->properties = $properties;
@@ -69,66 +76,113 @@ class SqsMessage implements Message
         $this->requeueVisibilityTimeout = 0;
     }
 
-    public function setBody(string $body): void
+    /**
+     * @param string|null $body
+     */
+    public function setBody(string $body = null): void
     {
         $this->body = $body;
     }
 
+    /**
+     * @return string|null
+     */
     public function getBody(): string
     {
         return $this->body;
     }
 
-    public function setProperties(array $properties): void
+    /**
+     * @param array|null $properties
+     */
+    public function setProperties(array $properties = null): void
     {
         $this->properties = $properties;
     }
 
-    public function setProperty(string $name, $value): void
+    /**
+     * @param string $name
+     * @param string|null $value
+     */
+    public function setProperty(string $name, $value = null): void
     {
         $this->properties[$name] = $value;
     }
 
+    /**
+     * @return array|null
+     */
     public function getProperties(): array
     {
         return $this->properties;
     }
 
+    /**
+     * @param string $name
+     * @param null $default
+     * @return mixed|null
+     */
     public function getProperty(string $name, $default = null)
     {
         return array_key_exists($name, $this->properties) ? $this->properties[$name] : $default;
     }
 
+    /**
+     * @param string $name
+     * @param $value
+     */
     public function setHeader(string $name, $value): void
     {
         $this->headers[$name] = $value;
     }
 
-    public function setHeaders(array $headers): void
+    /**
+     * @param array|null $headers
+     */
+    public function setHeaders(array $headers = null): void
     {
         $this->headers = $headers;
     }
 
+    /**
+     * @return array|null
+     */
     public function getHeaders(): array
     {
         return $this->headers;
     }
 
+    /**
+     * @param string $name
+     * @param null $default
+     * @return mixed|null
+     */
     public function getHeader(string $name, $default = null)
     {
         return array_key_exists($name, $this->headers) ? $this->headers[$name] : $default;
     }
 
+    /**
+     * @param array|null $attributes
+     */
     public function setAttributes(array $attributes): void
     {
         $this->attributes = $attributes;
     }
 
+    /**
+     * @return array|null
+     */
     public function getAttributes(): array
     {
         return $this->attributes;
     }
 
+    /**
+     * @param string $name
+     * @param null $default
+     * @return mixed|null
+     */
     public function getAttribute(string $name, $default = null)
     {
         return array_key_exists($name, $this->attributes) ? $this->attributes[$name] : $default;

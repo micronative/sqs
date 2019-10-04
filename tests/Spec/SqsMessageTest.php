@@ -12,6 +12,6 @@ class SqsMessageTest extends MessageSpec
      */
     protected function createMessage()
     {
-        return new SqsMessage();
+        return new SqsMessage('');
     }
 }

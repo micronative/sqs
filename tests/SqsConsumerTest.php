@@ -17,6 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 class SqsConsumerTest extends TestCase
 {
+
     use ClassExtensionTrait;
 
     public function testShouldImplementConsumerInterface()
@@ -57,20 +58,17 @@ class SqsConsumerTest extends TestCase
                 '@region' => null,
                 'QueueUrl' => 'theQueueUrl',
                 'ReceiptHandle' => 'theReceipt',
-            ]))
-        ;
+            ]));
 
         $context = $this->createContextMock();
         $context
             ->expects($this->once())
             ->method('getSqsClient')
-            ->willReturn($client)
-        ;
+            ->willReturn($client);
         $context
             ->expects($this->once())
             ->method('getQueueUrl')
-            ->willReturn('theQueueUrl')
-        ;
+            ->willReturn('theQueueUrl');
 
         $message = new SqsMessage();
         $message->setReceiptHandle('theReceipt');
@@ -89,20 +87,17 @@ class SqsConsumerTest extends TestCase
                 '@region' => 'theRegion',
                 'QueueUrl' => 'theQueueUrl',
                 'ReceiptHandle' => 'theReceipt',
-            ]))
-        ;
+            ]));
 
         $context = $this->createContextMock();
         $context
             ->expects($this->once())
             ->method('getSqsClient')
-            ->willReturn($client)
-        ;
+            ->willReturn($client);
         $context
             ->expects($this->once())
             ->method('getQueueUrl')
-            ->willReturn('theQueueUrl')
-        ;
+            ->willReturn('theQueueUrl');
 
         $message = new SqsMessage();
         $message->setReceiptHandle('theReceipt');
@@ -133,24 +128,20 @@ class SqsConsumerTest extends TestCase
                 '@region' => null,
                 'QueueUrl' => 'theQueueUrl',
                 'ReceiptHandle' => 'theReceipt',
-            ]))
-        ;
+            ]));
 
         $context = $this->createContextMock();
         $context
             ->expects($this->once())
             ->method('getSqsClient')
-            ->willReturn($client)
-        ;
+            ->willReturn($client);
         $context
             ->expects($this->once())
             ->method('getQueueUrl')
-            ->willReturn('theQueueUrl')
-        ;
+            ->willReturn('theQueueUrl');
         $context
             ->expects($this->never())
-            ->method('createProducer')
-        ;
+            ->method('createProducer');
 
         $message = new SqsMessage();
         $message->setReceiptHandle('theReceipt');
@@ -169,24 +160,20 @@ class SqsConsumerTest extends TestCase
                 '@region' => 'theRegion',
                 'QueueUrl' => 'theQueueUrl',
                 'ReceiptHandle' => 'theReceipt',
-            ]))
-        ;
+            ]));
 
         $context = $this->createContextMock();
         $context
             ->expects($this->once())
             ->method('getSqsClient')
-            ->willReturn($client)
-        ;
+            ->willReturn($client);
         $context
             ->expects($this->once())
             ->method('getQueueUrl')
-            ->willReturn('theQueueUrl')
-        ;
+            ->willReturn('theQueueUrl');
         $context
             ->expects($this->never())
-            ->method('createProducer')
-        ;
+            ->method('createProducer');
 
         $message = new SqsMessage();
         $message->setReceiptHandle('theReceipt');
@@ -209,24 +196,20 @@ class SqsConsumerTest extends TestCase
                 'QueueUrl' => 'theQueueUrl',
                 'ReceiptHandle' => 'theReceipt',
                 'VisibilityTimeout' => 0,
-            ]))
-        ;
+            ]));
 
         $context = $this->createContextMock();
         $context
             ->expects($this->once())
             ->method('getSqsClient')
-            ->willReturn($client)
-        ;
+            ->willReturn($client);
         $context
             ->expects($this->once())
             ->method('getQueueUrl')
-            ->willReturn('theQueueUrl')
-        ;
+            ->willReturn('theQueueUrl');
         $context
             ->expects($this->never())
-            ->method('createProducer')
-        ;
+            ->method('createProducer');
 
         $message = new SqsMessage();
         $message->setReceiptHandle('theReceipt');
@@ -249,24 +232,20 @@ class SqsConsumerTest extends TestCase
                 'QueueUrl' => 'theQueueUrl',
                 'ReceiptHandle' => 'theReceipt',
                 'VisibilityTimeout' => 30,
-            ]))
-        ;
+            ]));
 
         $context = $this->createContextMock();
         $context
             ->expects($this->once())
             ->method('getSqsClient')
-            ->willReturn($client)
-        ;
+            ->willReturn($client);
         $context
             ->expects($this->once())
             ->method('getQueueUrl')
-            ->willReturn('theQueueUrl')
-        ;
+            ->willReturn('theQueueUrl');
         $context
             ->expects($this->never())
-            ->method('createProducer')
-        ;
+            ->method('createProducer');
 
         $message = new SqsMessage();
         $message->setReceiptHandle('theReceipt');
@@ -312,25 +291,21 @@ class SqsConsumerTest extends TestCase
             ->expects($this->once())
             ->method('receiveMessage')
             ->with($this->identicalTo($expectedAttributes))
-            ->willReturn(new Result(['Messages' => [$expectedSqsMessage]]))
-        ;
+            ->willReturn(new Result(['Messages' => [$expectedSqsMessage]]));
 
         $context = $this->createContextMock();
         $context
             ->expects($this->once())
             ->method('getSqsClient')
-            ->willReturn($client)
-        ;
+            ->willReturn($client);
         $context
             ->expects($this->once())
             ->method('getQueueUrl')
-            ->willReturn('theQueueUrl')
-        ;
+            ->willReturn('theQueueUrl');
         $context
             ->expects($this->once())
             ->method('createMessage')
-            ->willReturn(new SqsMessage())
-        ;
+            ->willReturn(new SqsMessage());
 
         $consumer = new SqsConsumer($context, new SqsDestination('queue'));
         $result = $consumer->receiveNoWait();
@@ -338,7 +313,7 @@ class SqsConsumerTest extends TestCase
         $this->assertInstanceOf(SqsMessage::class, $result);
         $this->assertEquals('The Body', $result->getBody());
         $this->assertEquals(['hkey' => 'hvalue'], $result->getHeaders());
-        $this->assertEquals(['key' => 'value'], $result->getProperties());
+        $this->assertEquals(['key' => 'value', 'Headers' => '[{"hkey":"hvalue"},{"key":"value"}]'], $result->getProperties());
         $this->assertEquals([
             'SenderId' => 'AROAX5IAWYILCTYIS3OZ5:foo@bar.com',
             'ApproximateFirstReceiveTimestamp' => '1560512269481',
@@ -377,25 +352,21 @@ class SqsConsumerTest extends TestCase
                         'DataType' => 'String',
                     ],
                 ],
-            ]]]))
-        ;
+            ]]]));
 
         $context = $this->createContextMock();
         $context
             ->expects($this->once())
             ->method('getSqsClient')
-            ->willReturn($client)
-        ;
+            ->willReturn($client);
         $context
             ->expects($this->once())
             ->method('getQueueUrl')
-            ->willReturn('theQueueUrl')
-        ;
+            ->willReturn('theQueueUrl');
         $context
             ->expects($this->once())
             ->method('createMessage')
-            ->willReturn(new SqsMessage())
-        ;
+            ->willReturn(new SqsMessage());
 
         $destination = new SqsDestination('queue');
         $destination->setRegion('theRegion');
@@ -422,24 +393,20 @@ class SqsConsumerTest extends TestCase
             ->expects($this->once())
             ->method('receiveMessage')
             ->with($this->identicalTo($expectedAttributes))
-            ->willReturn(new Result())
-        ;
+            ->willReturn(new Result());
 
         $context = $this->createContextMock();
         $context
             ->expects($this->once())
             ->method('getSqsClient')
-            ->willReturn($client)
-        ;
+            ->willReturn($client);
         $context
             ->expects($this->once())
             ->method('getQueueUrl')
-            ->willReturn('theQueueUrl')
-        ;
+            ->willReturn('theQueueUrl');
         $context
             ->expects($this->never())
-            ->method('createMessage')
-        ;
+            ->method('createMessage');
 
         $consumer = new SqsConsumer($context, new SqsDestination('queue'));
         $result = $consumer->receive(10000);
