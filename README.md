@@ -20,7 +20,11 @@
 # Description
 
 This project was forked from [enqueue/sqs](https://github.com/php-enqueue/sqs) and made the following improvements:
-+ SqsProducer->send():  
++ Move all classes to src
++ Rename Tests to tests
++ Move examples to tests
++ Change namespace to Brighte\Sqs
++ SqsProducer->send(): 
 <pre>
 $message->setMessageId($result['MessageId']);
 </pre>
@@ -71,7 +75,3 @@ protected function convertMessage(array $sqsMessage): SqsMessage
         return $message;
     }
 </pre>
-+ Move all classes to src
-+ Rename Tests to tests
-+ Move examples to tests
-+ Change namespace to Brighte\Sqs
