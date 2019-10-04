@@ -1,21 +1,9 @@
-sudo: false
-
-git:
-    depth: 10
-
 language: php
-
 php:
-    - '7.1'
-    - '7.2'
-
-cache:
-    directories:
-        - $HOME/.composer/cache
-
-install:
-    - composer self-update
-    - composer install --prefer-source
-
+    - 7.1
+    - 7.3
+install: composer install
 script:
-    - vendor/bin/phpunit --exclude-group=functional
+    - vendor/bin/phpunit --coverage-clover=coverage.xml
+after_script:
+    - bash <(curl -s https://codecov.io/bash)

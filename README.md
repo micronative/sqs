@@ -1,28 +1,77 @@
-<h2 align="center">Supporting Enqueue</h2>
+# Brighte Sqs
+[![Software license][ico-license]](LICENSE)
+[![Version][ico-version-stable]][link-packagist]
+[![Download][ico-downloads-monthly]][link-downloads]
+[![Build status][ico-travis]][link-travis]
+[![Coverage][ico-codecov]][link-codecov]
 
-Enqueue is an MIT-licensed open source project with its ongoing development made possible entirely by the support of community and our customers. If you'd like to join them, please consider:
 
-- [Become a sponsor](https://www.patreon.com/makasim)
-- [Become our client](http://forma-pro.com/)
+[ico-license]: https://img.shields.io/github/license/nrk/predis.svg
+[ico-version-stable]: https://img.shields.io/packagist/v/brightecapital/sqs.svg
+[ico-downloads-monthly]: https://img.shields.io/packagist/dm/brightecapital/sqs.svg
+[ico-travis]: https://travis-ci.com/brighte-capital/sqs.svg?branch=master
+[ico-codecov]: https://codecov.io/gh/brighte-capital/sqs/branch/master/graph/badge.svg
 
----
+[link-packagist]: https://packagist.org/packages/brightecapital/sqs
+[link-codecov]: https://codecov.io/gh/brighte-capital/sqs
+[link-travis]: https://travis-ci.com/brighte-capital/sqs
+[link-downloads]: https://packagist.org/packages/brightecapital/sqs/stats
 
-# Amazon SQS Transport
+# Description
 
-[![Gitter](https://badges.gitter.im/php-enqueue/Lobby.svg)](https://gitter.im/php-enqueue/Lobby)
-[![Build Status](https://travis-ci.org/php-enqueue/sqs.png?branch=master)](https://travis-ci.org/php-enqueue/sqs)
-[![Total Downloads](https://poser.pugx.org/enqueue/sqs/d/total.png)](https://packagist.org/packages/enqueue/sqs)
-[![Latest Stable Version](https://poser.pugx.org/enqueue/sqs/version.png)](https://packagist.org/packages/enqueue/sqs)
+This project was forked from [enqueue/sqs](https://github.com/php-enqueue/sqs) and made the following improvements:
++ SqsProducer->send():  
+<pre>
+$message->setMessageId($result['MessageId']);
+</pre>
++ SqsConsumer->covertMessage():
+<pre>
+protected function convertMessage(array $sqsMessage): SqsMessage
+    {
+        $message = $this->context->createMessage();
 
-This is an implementation of Queue Interop specification. It allows you to send and consume message using [Amazon SQS](https://aws.amazon.com/sqs/) service.
+        $message->setBody($sqsMessage['Body']);
+        $message->setReceiptHandle($sqsMessage['ReceiptHandle']);
 
-## Resources
+        if (isset($sqsMessage['Attributes'])) {
+            $message->setAttributes($sqsMessage['Attributes']);
 
-* [Site](https://enqueue.forma-pro.com/)
-* [Documentation](https://php-enqueue.github.io/transport/sqs/)
-* [Questions](https://gitter.im/php-enqueue/Lobby)
-* [Issue Tracker](https://github.com/php-enqueue/enqueue-dev/issues)
+            if (isset($sqsMessage['Attributes']['MessageDeduplicationId'])) {
+                $message->setMessageDeduplicationId($sqsMessage['Attributes']['MessageDeduplicationId']);
+            }
 
-## License
+            if (isset($sqsMessage['Attributes']['MessageGroupId'])) {
+                $message->setMessageGroupId($sqsMessage['Attributes']['MessageGroupId']);
+            }
+        }
 
-It is released under the [MIT License](LICENSE).
+        if (isset($sqsMessage['Attributes']['ApproximateReceiveCount'])) {
+            $message->setRedelivered(((int) $sqsMessage['Attributes']['ApproximateReceiveCount']) > 1);
+        }
+
+        if (isset($sqsMessage['MessageAttributes'])) {
+            if (isset($sqsMessage['MessageAttributes']['Headers'])) {
+                $headers = json_decode($sqsMessage['MessageAttributes']['Headers']['StringValue'], true);
+
+                $message->setHeaders($headers[0]);
+                $message->setProperties($headers[1]);
+            }
+
+            foreach ($sqsMessage['MessageAttributes'] as $name => $attribute) {
+                if (isset($attribute['StringValue'])) {
+                    $message->setProperty($name, $attribute['StringValue']);
+                }
+            }
+        }
+
+        if (isset($sqsMessage['MessageId'])) {
+            $message->setMessageId($sqsMessage['MessageId']);
+        }
+
+        return $message;
+    }
+</pre>
++ Move all classes to src
++ Rename Tests to tests
++ Move examples to tests
++ Change namespace to Brighte\Sqs
