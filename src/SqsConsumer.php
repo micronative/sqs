@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Brighte\Sqs;
 
@@ -11,6 +11,7 @@ use Interop\Queue\Queue;
 
 class SqsConsumer implements Consumer
 {
+
     /**
      * @var SqsDestination
      */
@@ -205,15 +206,11 @@ class SqsConsumer implements Consumer
         }
 
         if (isset($sqsMessage['MessageAttributes'])) {
-            if (isset($sqsMessage['MessageAttributes']['Headers'])) {
-                $headers = json_decode($sqsMessage['MessageAttributes']['Headers']['StringValue'], true);
-
-                $message->setHeaders($headers[0]);
-                $message->setProperties($headers[1]);
-            }
-
             foreach ($sqsMessage['MessageAttributes'] as $name => $attribute) {
-                if (isset($attribute['StringValue'])) {
+                if ($name == 'Headers') {
+                    $headers = json_decode($attribute['StringValue'], true);
+                    $message->setHeaders($headers);
+                } else {
                     $message->setProperty($name, $attribute['StringValue']);
                 }
             }

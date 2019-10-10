@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Brighte\Sqs;
 
@@ -14,6 +14,7 @@ use Interop\Queue\Producer;
 
 class SqsProducer implements Producer
 {
+
     /**
      * @var int|null
      */
@@ -31,7 +32,7 @@ class SqsProducer implements Producer
 
     /**
      * @param SqsDestination $destination
-     * @param SqsMessage     $message
+     * @param SqsMessage $message
      */
     public function send(Destination $destination, Message $message): void
     {
@@ -45,12 +46,6 @@ class SqsProducer implements Producer
 
         $arguments = [
             '@region' => $destination->getRegion(),
-            'MessageAttributes' => [
-                'Headers' => [
-                    'DataType' => 'String',
-                    'StringValue' => json_encode([$message->getHeaders(), $message->getProperties()]),
-                ],
-            ],
             'MessageBody' => $body,
             'QueueUrl' => $this->context->getQueueUrl($destination),
         ];
@@ -69,6 +64,19 @@ class SqsProducer implements Producer
 
         if ($message->getMessageGroupId()) {
             $arguments['MessageGroupId'] = $message->getMessageGroupId();
+        }
+
+        if ($message->getHeaders()) {
+            $arguments['MessageAttributes']['Headers'] = [
+                'DataType' => 'String',
+                'StringValue' => json_encode([$message->getHeaders()]),
+            ];
+        }
+        
+        if ($message->getProperties()) {
+            foreach ($message->getProperties() as $name => $value) {
+                $arguments['MessageAttributes'][$name] = ['DataType' => 'String', 'StringValue' => $value];
+            }
         }
 
         $result = $this->context->getSqsClient()->sendMessage($arguments);
