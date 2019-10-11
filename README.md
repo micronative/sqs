@@ -27,7 +27,59 @@ This project was forked from [enqueue/sqs](https://github.com/php-enqueue/sqs) a
 
 SqsProducer->send(): 
 <pre>
-$message->setMessageId($result['MessageId']);
+public function send(Destination $destination, Message $message): void
+    {
+        InvalidDestinationException::assertDestinationInstanceOf($destination, SqsDestination::class);
+        InvalidMessageException::assertMessageInstanceOf($message, SqsMessage::class);
+
+        $body = $message->getBody();
+        if (empty($body)) {
+            throw new InvalidMessageException('The message body must be a non-empty string.');
+        }
+
+        $arguments = [
+            '@region' => $destination->getRegion(),
+            'MessageBody' => $body,
+            'QueueUrl' => $this->context->getQueueUrl($destination),
+        ];
+
+        if (null !== $this->deliveryDelay) {
+            $arguments['DelaySeconds'] = (int) $this->deliveryDelay / 1000;
+        }
+
+        if ($message->getDelaySeconds()) {
+            $arguments['DelaySeconds'] = $message->getDelaySeconds();
+        }
+
+        if ($message->getMessageDeduplicationId()) {
+            $arguments['MessageDeduplicationId'] = $message->getMessageDeduplicationId();
+        }
+
+        if ($message->getMessageGroupId()) {
+            $arguments['MessageGroupId'] = $message->getMessageGroupId();
+        }
+
+        if ($message->getHeaders()) {
+            $arguments['MessageAttributes']['Headers'] = [
+                'DataType' => 'String',
+                'StringValue' => json_encode([$message->getHeaders()]),
+            ];
+        }
+        
+        if ($message->getProperties()) {
+            foreach ($message->getProperties() as $name => $value) {
+                $arguments['MessageAttributes'][$name] = ['DataType' => 'String', 'StringValue' => $value];
+            }
+        }
+
+        $result = $this->context->getSqsClient()->sendMessage($arguments);
+
+        if (false == $result->hasKey('MessageId')) {
+            throw new \RuntimeException('Message was not sent');
+        }
+
+        $message->setMessageId($result['MessageId']);
+    }
 </pre>
 
 SqsConsumer->covertMessage():
@@ -56,15 +108,11 @@ protected function convertMessage(array $sqsMessage): SqsMessage
         }
 
         if (isset($sqsMessage['MessageAttributes'])) {
-            if (isset($sqsMessage['MessageAttributes']['Headers'])) {
-                $headers = json_decode($sqsMessage['MessageAttributes']['Headers']['StringValue'], true);
-
-                $message->setHeaders($headers[0]);
-                $message->setProperties($headers[1]);
-            }
-
             foreach ($sqsMessage['MessageAttributes'] as $name => $attribute) {
-                if (isset($attribute['StringValue'])) {
+                if ($name == 'Headers') {
+                    $headers = json_decode($attribute['StringValue'], true);
+                    $message->setHeaders($headers);
+                } else {
                     $message->setProperty($name, $attribute['StringValue']);
                 }
             }
