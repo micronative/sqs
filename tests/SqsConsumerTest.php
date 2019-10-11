@@ -312,13 +312,13 @@ class SqsConsumerTest extends TestCase
 
         $this->assertInstanceOf(SqsMessage::class, $result);
         $this->assertEquals('The Body', $result->getBody());
-        $this->assertEquals(['hkey' => 'hvalue'], $result->getHeaders());
-        $this->assertEquals(['key' => 'value', 'Headers' => '[{"hkey":"hvalue"},{"key":"value"}]'], $result->getProperties());
+        $this->assertEquals([['hkey' => 'hvalue'], ['key' => 'value']], $result->getHeaders());
+        $this->assertEquals([], $result->getProperties());
         $this->assertEquals([
             'SenderId' => 'AROAX5IAWYILCTYIS3OZ5:foo@bar.com',
             'ApproximateFirstReceiveTimestamp' => '1560512269481',
             'ApproximateReceiveCount' => '3',
-            'SentTimestamp' => '1560512260079',
+            'SentTimestamp' => '1560512260079'
         ], $result->getAttributes());
         $this->assertTrue($result->isRedelivered());
         $this->assertEquals('The Receipt', $result->getReceiptHandle());

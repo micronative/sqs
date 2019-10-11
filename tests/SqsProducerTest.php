@@ -86,17 +86,21 @@ class SqsProducerTest extends TestCase
     {
         $expectedArguments = [
             '@region' => null,
-            'MessageAttributes' => [
-                'Headers' => [
-                    'DataType' => 'String',
-                    'StringValue' => '[{"hkey":"hvaleu"},{"key":"value"}]',
-                ],
-            ],
             'MessageBody' => 'theBody',
             'QueueUrl' => 'theQueueUrl',
             'DelaySeconds' => 12345,
             'MessageDeduplicationId' => 'theDeduplicationId',
             'MessageGroupId' => 'groupId',
+            'MessageAttributes' => [
+                'Headers' => [
+                    'DataType' => 'String',
+                    'StringValue' => '[{"hkey":"hvaleu"}]',
+                ],
+                'key' => [
+                    'DataType' => 'String',
+                    'StringValue' => 'value'
+                ],
+            ],
         ];
 
         $client = $this->createSqsClientMock();
@@ -133,12 +137,6 @@ class SqsProducerTest extends TestCase
     {
         $expectedArguments = [
             '@region' => 'theRegion',
-            'MessageAttributes' => [
-                'Headers' => [
-                    'DataType' => 'String',
-                    'StringValue' => '[[],[]]',
-                ],
-            ],
             'MessageBody' => 'theBody',
             'QueueUrl' => 'theQueueUrl',
         ];
@@ -176,17 +174,21 @@ class SqsProducerTest extends TestCase
     {
         $expectedArguments = [
             '@region' => null,
-            'MessageAttributes' => [
-                'Headers' => [
-                    'DataType' => 'String',
-                    'StringValue' => '[{"hkey":"hvaleu"},{"key":"value"}]',
-                ],
-            ],
             'MessageBody' => 'theBody',
             'QueueUrl' => 'theQueueUrl',
             'DelaySeconds' => 12345,
             'MessageDeduplicationId' => 'theDeduplicationId',
             'MessageGroupId' => 'groupId',
+            'MessageAttributes' => [
+                'Headers' => [
+                    'DataType' => 'String',
+                    'StringValue' => '[{"hkey":"hvaleu"}]',
+                ],
+                'key' => [
+                    'DataType' => 'String',
+                    'StringValue' => 'value'
+                ],
+            ],
         ];
 
         $client = $this->createSqsClientMock();
