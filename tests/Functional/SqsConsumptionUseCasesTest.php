@@ -1,6 +1,6 @@
 <?php
 
-namespace Brighte\Sqs\Tests\Functional;
+namespace Micronative\Sqs\Tests\Functional;
 
 use Enqueue\Consumption\ChainExtension;
 use Enqueue\Consumption\Extension\LimitConsumedMessagesExtension;
@@ -8,7 +8,7 @@ use Enqueue\Consumption\Extension\LimitConsumptionTimeExtension;
 use Enqueue\Consumption\Extension\ReplyExtension;
 use Enqueue\Consumption\QueueConsumer;
 use Enqueue\Consumption\Result;
-use Brighte\Sqs\SqsContext;
+use Micronative\Sqs\SqsContext;
 use Enqueue\Test\RetryTrait;
 use Enqueue\Test\SqsExtension;
 use Interop\Queue\Context;

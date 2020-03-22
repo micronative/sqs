@@ -1,10 +1,10 @@
 <?php
 
-namespace Brighte\Sqs\Tests\Functional;
+namespace Micronative\Sqs\Tests\Functional;
 
-use Brighte\Sqs\SqsContext;
-use Brighte\Sqs\SqsDestination;
-use Brighte\Sqs\SqsMessage;
+use Micronative\Sqs\SqsContext;
+use Micronative\Sqs\SqsDestination;
+use Micronative\Sqs\SqsMessage;
 use Enqueue\Test\SqsExtension;
 use PHPUnit\Framework\TestCase;
 

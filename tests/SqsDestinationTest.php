@@ -1,8 +1,8 @@
 <?php
 
-namespace Brighte\Sqs\Tests;
+namespace Micronative\Sqs\Tests;
 
-use Brighte\Sqs\SqsDestination;
+use Micronative\Sqs\SqsDestination;
 use Enqueue\Test\ClassExtensionTrait;
 use Interop\Queue\Queue;
 use Interop\Queue\Topic;

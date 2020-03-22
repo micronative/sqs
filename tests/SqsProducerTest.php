@@ -1,13 +1,13 @@
 <?php
 
-namespace Brighte\Sqs\Tests;
+namespace Micronative\Sqs\Tests;
 
 use Aws\Result;
-use Brighte\Sqs\SqsClient;
-use Brighte\Sqs\SqsContext;
-use Brighte\Sqs\SqsDestination;
-use Brighte\Sqs\SqsMessage;
-use Brighte\Sqs\SqsProducer;
+use Micronative\Sqs\SqsClient;
+use Micronative\Sqs\SqsContext;
+use Micronative\Sqs\SqsDestination;
+use Micronative\Sqs\SqsMessage;
+use Micronative\Sqs\SqsProducer;
 use Enqueue\Test\ClassExtensionTrait;
 use Interop\Queue\Destination;
 use Interop\Queue\Exception\InvalidDestinationException;
@@ -44,7 +44,7 @@ class SqsProducerTest extends TestCase
     public function testShouldThrowIfDestinationOfInvalidType()
     {
         $this->expectException(InvalidDestinationException::class);
-        $this->expectExceptionMessage('The destination must be an instance of Brighte\Sqs\SqsDestination but got Mock_Destinat');
+        $this->expectExceptionMessage('The destination must be an instance of Micronative\Sqs\SqsDestination but got Mock_Destinat');
 
         $producer = new SqsProducer($this->createSqsContextMock());
 

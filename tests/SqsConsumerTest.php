@@ -1,14 +1,14 @@
 <?php
 
-namespace Brighte\Sqs\Tests;
+namespace Micronative\Sqs\Tests;
 
 use Aws\Result;
-use Brighte\Sqs\SqsClient;
-use Brighte\Sqs\SqsConsumer;
-use Brighte\Sqs\SqsContext;
-use Brighte\Sqs\SqsDestination;
-use Brighte\Sqs\SqsMessage;
-use Brighte\Sqs\SqsProducer;
+use Micronative\Sqs\SqsClient;
+use Micronative\Sqs\SqsConsumer;
+use Micronative\Sqs\SqsContext;
+use Micronative\Sqs\SqsDestination;
+use Micronative\Sqs\SqsMessage;
+use Micronative\Sqs\SqsProducer;
 use Enqueue\Test\ClassExtensionTrait;
 use Interop\Queue\Consumer;
 use Interop\Queue\Exception\InvalidMessageException;
@@ -42,7 +42,7 @@ class SqsConsumerTest extends TestCase
     public function testAcknowledgeShouldThrowIfInstanceOfMessageIsInvalid()
     {
         $this->expectException(InvalidMessageException::class);
-        $this->expectExceptionMessage('The message must be an instance of Brighte\Sqs\SqsMessage but it is Mock_Message');
+        $this->expectExceptionMessage('The message must be an instance of Micronative\Sqs\SqsMessage but it is Mock_Message');
 
         $consumer = new SqsConsumer($this->createContextMock(), new SqsDestination('queue'));
         $consumer->acknowledge($this->createMock(Message::class));
@@ -112,7 +112,7 @@ class SqsConsumerTest extends TestCase
     public function testRejectShouldThrowIfInstanceOfMessageIsInvalid()
     {
         $this->expectException(InvalidMessageException::class);
-        $this->expectExceptionMessage('The message must be an instance of Brighte\Sqs\SqsMessage but it is Mock_Message');
+        $this->expectExceptionMessage('The message must be an instance of Micronative\Sqs\SqsMessage but it is Mock_Message');
 
         $consumer = new SqsConsumer($this->createContextMock(), new SqsDestination('queue'));
         $consumer->reject($this->createMock(Message::class));

@@ -1,8 +1,8 @@
 <?php
 
-namespace Brighte\Sqs\Tests;
+namespace Micronative\Sqs\Tests;
 
-use Brighte\Sqs\SqsMessage;
+use Micronative\Sqs\SqsMessage;
 use Enqueue\Test\ClassExtensionTrait;
 
 class SqsMessageTest extends \PHPUnit\Framework\TestCase

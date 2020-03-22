@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brighte\Sqs;
+namespace Micronative\Sqs;
 
 use Aws\Sdk;
 use Aws\Sqs\SqsClient as AwsSqsClient;

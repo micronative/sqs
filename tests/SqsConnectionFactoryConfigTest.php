@@ -1,8 +1,8 @@
 <?php
 
-namespace Brighte\Sqs\Tests;
+namespace Micronative\Sqs\Tests;
 
-use Brighte\Sqs\SqsConnectionFactory;
+use Micronative\Sqs\SqsConnectionFactory;
 use Enqueue\Test\ClassExtensionTrait;
 use PHPUnit\Framework\TestCase;
 

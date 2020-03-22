@@ -1,8 +1,8 @@
 <?php
 
-namespace Brighte\Sqs\Tests\Spec;
+namespace Micronative\Sqs\Tests\Spec;
 
-use Brighte\Sqs\SqsMessage;
+use Micronative\Sqs\SqsMessage;
 use Interop\Queue\Spec\MessageSpec;
 
 class SqsMessageTest extends MessageSpec

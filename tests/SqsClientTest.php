@@ -1,12 +1,12 @@
 <?php
 
-namespace Brighte\Sqs\Tests;
+namespace Micronative\Sqs\Tests;
 
 use Aws\MultiRegionClient;
 use Aws\Result;
 use Aws\Sdk;
 use Aws\Sqs\SqsClient as AwsSqsClient;
-use Brighte\Sqs\SqsClient;
+use Micronative\Sqs\SqsClient;
 use PHPUnit\Framework\TestCase;
 
 class SqsClientTest extends TestCase

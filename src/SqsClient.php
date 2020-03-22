@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brighte\Sqs;
+namespace Micronative\Sqs;
 
 use Aws\MultiRegionClient;
 use Aws\Result;

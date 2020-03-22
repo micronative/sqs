@@ -1,11 +1,11 @@
 <?php
 
-namespace Brighte\Sqs\Tests;
+namespace Micronative\Sqs\Tests;
 
 use Aws\Sqs\SqsClient as AwsSqsClient;
-use Brighte\Sqs\SqsClient;
-use Brighte\Sqs\SqsConnectionFactory;
-use Brighte\Sqs\SqsContext;
+use Micronative\Sqs\SqsClient;
+use Micronative\Sqs\SqsConnectionFactory;
+use Micronative\Sqs\SqsContext;
 use Enqueue\Test\ClassExtensionTrait;
 use Interop\Queue\ConnectionFactory;
 use PHPUnit\Framework\TestCase;

@@ -15,7 +15,7 @@ if ($autoload) {
     throw new \LogicException('Composer autoload was not found');
 }
 
-use Brighte\Sqs\SqsConnectionFactory;
+use Micronative\Sqs\SqsConnectionFactory;
 
 $factory = new SqsConnectionFactory(getenv('SQS_DSN'));
 $context = $factory->createContext();

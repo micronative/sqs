@@ -1,6 +1,6 @@
 <?php
 
-namespace Brighte\Sqs\Tests\Spec;
+namespace Micronative\Sqs\Tests\Spec;
 
 use Enqueue\Test\SqsExtension;
 use Interop\Queue\Spec\ProducerSpec;

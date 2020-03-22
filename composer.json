@@ -1,5 +1,5 @@
 {
-  "name": "brightecapital/sqs",
+  "name": "micronative/sqs",
   "type": "library",
   "description": "AWS SQS Transport (fork and improve from enqueue/sqs)",
   "keywords": [
@@ -8,12 +8,12 @@
     "aws",
     "sqs"
   ],
-  "homepage": "https://github.com/brightecapital/",
+  "homepage": "https://github.com/micronative/",
   "license": "MIT",
   "authors": [
     {
       "name": "Ken Ngo",
-      "email": "ken.ngo@brighte.com.au"
+      "email": "ngodinhloc@gmail.com"
     }
   ],
   "require": {
@@ -29,12 +29,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Brighte\\Sqs\\": "src/"
+      "Micronative\\Sqs\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Brighte\\Sqs\\Tests\\": "tests/"
+      "Micronative\\Sqs\\Tests\\": "tests/"
     }
   },
   "minimum-stability": "dev"

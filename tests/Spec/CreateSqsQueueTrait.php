@@ -1,9 +1,9 @@
 <?php
 
-namespace Brighte\Sqs\Tests\Spec;
+namespace Micronative\Sqs\Tests\Spec;
 
-use Brighte\Sqs\SqsContext;
-use Brighte\Sqs\SqsDestination;
+use Micronative\Sqs\SqsContext;
+use Micronative\Sqs\SqsDestination;
 
 trait CreateSqsQueueTrait
 {
