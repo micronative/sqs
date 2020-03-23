@@ -1,4 +1,4 @@
-# Brighte Sqs
+# Micronative/Sqs
 [![Software license][ico-license]](LICENSE)
 [![Version][ico-version-stable]][link-packagist]
 [![Download][ico-downloads-monthly]][link-downloads]
@@ -23,7 +23,7 @@ This project was forked from [enqueue/sqs](https://github.com/php-enqueue/sqs) a
 + Move all classes to src
 + Rename Tests to tests
 + Move examples to tests
-+ Change namespace to Brighte\Sqs
++ Change namespace to Micronative\Sqs
 
 SqsProducer->send(): 
 <pre>
