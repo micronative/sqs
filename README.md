@@ -17,6 +17,12 @@
 [link-travis]: https://travis-ci.org/github/micronative/sqs
 [link-downloads]: https://packagist.org/packages/micronative/sqs/stats
 
+## Configuration
+<pre>
+"require": {
+        "micronative/sqs": "^1.1.2"
+    }
+</pre>
 # Description
 
 This project was forked from [enqueue/sqs](https://github.com/php-enqueue/sqs) and made the following improvements:
